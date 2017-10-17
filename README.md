@@ -1,0 +1,2 @@
+# hotdog
+detects hotdogs
