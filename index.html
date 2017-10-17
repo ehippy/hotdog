@@ -35,7 +35,7 @@
 </head>
 <body>
 <div class="aligner">
-    <div id="drop">Drop files here.</div>
+    <div id="drop">Drop PNG/JPG here.</div>
     <div id="list">
         <h1>Uploaded Files:</h1>
     </div>
@@ -99,7 +99,7 @@
                             .then(function (json) {
 
                                 var hotDogAnalysis = document.createElement('div');
-                                hotDogAnalysis.innerHTML = json;
+                                hotDogAnalysis.innerHTML = json.Labels.map((label)=>{return label.Name + '(' + Math.round(label.Confidence) + '%)'}).join(', ');
                                 list.appendChild(hotDogAnalysis);
                         });
                     });
