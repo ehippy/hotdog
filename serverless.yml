@@ -22,6 +22,7 @@ functions:
       - http:
           path: /
           method: get
+
   request_upload_url:
     handler: handler.requestUploadURL
     events:
@@ -29,12 +30,13 @@ functions:
           path: requestUploadURL
           method: post
           cors: true
+
   detect_hotdot:
     handler: handler.detectHotDog
     events:
       - http:
           path: detect
-          method: get
+          method: post
           cors: true
 
 

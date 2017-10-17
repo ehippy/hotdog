@@ -7,9 +7,11 @@
             height: 100%;
             margin: 0;
         }
+
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
+
         .aligner {
             height: 100%;
             display: flex;
@@ -17,6 +19,7 @@
             justify-content: center;
             flex-direction: column;
         }
+
         #drop {
             height: 200px;
             width: 200px;
@@ -26,6 +29,7 @@
             font-size: 20px;
             display: flex;
             align-items: center;
+            text-align: center;
         }
     </style>
 </head>
@@ -47,15 +51,15 @@
         return false;
     }
 
-    function handleDrop(e){
+    function handleDrop(e) {
         e.preventDefault();
-        var dt    = e.dataTransfer;
+        var dt = e.dataTransfer;
         var files = dt.files;
-        for (var i=0; i<files.length; i++) {
+        for (var i = 0; i < files.length; i++) {
             var file = files[i];
             var reader = new FileReader();
-            reader.addEventListener('loadend', function(e){
-                fetch(apiBaseURL+"/requestUploadURL", {
+            reader.addEventListener('loadend', function (e) {
+                fetch(apiBaseURL + "/requestUploadURL", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json'
@@ -65,24 +69,48 @@
                         type: file.type
                     })
                 })
-                    .then(function(response){
+                    .then(function (response) {
                         return response.json();
                     })
-                    .then(function(json){
+                    .then(function (json) {
                         return fetch(json.uploadURL, {
                             method: "PUT",
                             body: new Blob([reader.result], {type: file.type})
                         })
                     })
-                    .then(function(){
+                    .then(function () {
                         var uploadedFileNode = document.createElement('div');
-                        uploadedFileNode.innerHTML = '<a href="//s3.amazonaws.com/secrethotdogbucket/'+ file.name +'">'+ file.name +'</a>';
+                        uploadedFileNode.innerHTML = '<a href="//s3.amazonaws.com/secrethotdogbucket/' + file.name + '">' + file.name + '</a>';
                         list.appendChild(uploadedFileNode);
+
+                        fetch(apiBaseURL + "/detect",  {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                name: file.name
+                            })
+                        })
+                            .then(function (response) {
+                                console.log(response);
+                                return response.json();
+                            })
+                            .then(function (json) {
+
+                                var hotDogAnalysis = document.createElement('div');
+                                hotDogAnalysis.innerHTML = json;
+                                list.appendChild(hotDogAnalysis);
+                        });
                     });
             });
             reader.readAsArrayBuffer(file);
         }
         return false;
+    }
+
+    function analyze() {
+
     }
 
     // Tells the browser that we *can* drop on this target

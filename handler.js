@@ -53,13 +53,14 @@ module.exports.requestUploadURL = (event, context, callback) => {
 module.exports.detectHotDog = (event, context, callback) => {
 
     console.log(event);
+    let params = JSON.parse(event.body);
 
 
     let rekogParams = {
         Image: {
             S3Object: {
                 Bucket: image_bucket_name,
-                Name: filename
+                Name: params.name
             }
         }
     };
@@ -72,6 +73,7 @@ module.exports.detectHotDog = (event, context, callback) => {
 
         if (err) {
             response.statusCode = 500;
+            console.log("REKOG ERROR:", err);
         } else {
             console.log(data);
             response.body = JSON.stringify(data);
