@@ -1,0 +1,59 @@
+service: hotdog
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "rekognition:DetectLabels"
+      Resource: "*"
+    - Effect: "Allow"
+      Action:
+        - "s3:*"
+      Resource:
+        - "arn:aws:s3:::secrethotdogbucket/*"
+
+functions:
+  home:
+    handler: handler.home
+    events:
+      - http:
+          path: /
+          method: get
+  request_upload_url:
+    handler: handler.requestUploadURL
+    events:
+      - http:
+          path: requestUploadURL
+          method: post
+          cors: true
+  detect_hotdot:
+    handler: handler.detectHotDog
+    events:
+      - http:
+          path: detect
+          method: get
+          cors: true
+
+
+# you can add CloudFormation resource templates here
+resources:
+  Resources:
+    ImgBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: secrethotdogbucket
+        AccessControl: PublicRead
+        CorsConfiguration:
+          CorsRules:
+          - AllowedMethods:
+            - GET
+            - PUT
+            - POST
+            - HEAD
+            AllowedOrigins:
+            - "*"
+            AllowedHeaders:
+            - "*"

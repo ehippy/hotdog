@@ -1,0 +1,22 @@
+{
+  "name": "hotdog",
+  "version": "1.0.0",
+  "description": "detects hotdogs",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehippy/hotdog.git"
+  },
+  "author": "fj",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ehippy/hotdog/issues"
+  },
+  "homepage": "https://github.com/ehippy/hotdog#readme",
+  "dependencies": {
+    "aws-sdk": "^2.134.0"
+  }
+}
