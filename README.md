@@ -1,5 +1,5 @@
 # Hotdog Cloud
-Hotdog detection wherever you are! Available at [https://hotdog.cloud]()
+Hotdog detection wherever you are! Available at [https://hotdog.cloud](https://hotdog.cloud)
 
 ### Credits
  - Javier Sosa's [Confetti Fiddle](http://jsfiddle.net/Javalsu/94tj0cqd/)
