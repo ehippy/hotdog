@@ -27,8 +27,6 @@ module.exports.home = (event, context, callback) => {
             body: data
         })
     });
-
-
 };
 
 module.exports.requestUploadURL = (event, context, callback) => {
@@ -36,7 +34,7 @@ module.exports.requestUploadURL = (event, context, callback) => {
 
     let uploadURL = s3.getSignedUrl('putObject', {
         Bucket: image_bucket_name,
-        Key:  params.name,
+        Key: params.name,
         ContentType: params.type,
         ACL: 'public-read',
     });
@@ -46,7 +44,7 @@ module.exports.requestUploadURL = (event, context, callback) => {
         headers: {
             'Access-Control-Allow-Origin': '*'
         },
-        body: JSON.stringify({ uploadURL: uploadURL }),
+        body: JSON.stringify({uploadURL: uploadURL}),
     })
 };
 
@@ -64,7 +62,7 @@ module.exports.detectHotDog = (event, context, callback) => {
             }
         }
     };
-    rekognition.detectLabels(rekogParams, function(err, data) {
+    rekognition.detectLabels(rekogParams, function (err, data) {
 
         const response = {
             statusCode: 200,

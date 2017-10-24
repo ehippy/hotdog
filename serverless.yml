@@ -31,7 +31,7 @@ functions:
           method: post
           cors: true
 
-  detect_hotdot:
+  detect_hotdog:
     handler: handler.detectHotDog
     events:
       - http:
