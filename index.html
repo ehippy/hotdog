@@ -96,7 +96,7 @@
                     .then(function () {
 
 
-                        uploadedFileNode.innerHTML = '<img class="card-img-top" src="//s3.amazonaws.com/secrethotdogbucket/' + file.name + '">';
+                        uploadedFileNode.innerHTML = '<img class="card-img-bottom" src="//s3.amazonaws.com/secrethotdogbucket/' + file.name + '">';
 
 
                         fetch(apiBaseURL + "/detect", {
@@ -121,13 +121,15 @@
                                         return label.Name + '(' + Math.round(label.Confidence) + '%)'
                                     }).join(', ')
                                     + "</p>";
-                                uploadedFileNode.appendChild(hotDogAnalysis);
+
+                                uploadedFileNode.insertBefore(hotDogAnalysis, uploadedFileNode.firstChild);
+
                                 if (hotDogAnalysis.innerHTML.indexOf('Hot Dog') > 0) {
                                     window.rain();
                                     var alart = document.createElement('p');
                                     alart.className = 'hotDogDetected';
                                     alart.innerText = 'Hot Dog!!';
-                                    uploadedFileNode.appendChild(alart);
+                                    hotDogAnalysis.appendChild(alart);
 
                                     setTimeout(function() { window.dry() }, 3000);
                                 } else {
@@ -135,7 +137,7 @@
                                     var alart = document.createElement('p');
                                     alart.className = 'notHotDog';
                                     alart.innerText = 'Not a hot dog.';
-                                    uploadedFileNode.appendChild(alart);
+                                    hotDogAnalysis.appendChild(alart);
                                 }
                             });
                     });
