@@ -23,6 +23,15 @@ functions:
           path: /
           method: get
 
+  patreon:
+    handler: handler.patreon
+    events:
+      - http:
+          path: /patreon
+          method: post
+    environment:
+      PATREON_SECRET: ${opt:patreon}
+
   request_upload_url:
     handler: handler.requestUploadURL
     events:

@@ -29,6 +29,44 @@ module.exports.home = (event, context, callback) => {
     });
 };
 
+module.exports.patreon = (event, context, callback) => {
+
+    console.log(event);
+
+    let crypto = require('crypto');
+
+    const patreonSecret = process.env.PATREON_SECRET;
+
+    let hash = event.headers['X-Patreon-Signature'],
+        hmac = crypto.createHmac("md5", patreonSecret);
+
+    hmac.update(event.body);
+
+    let crypted = hmac.digest("hex");
+
+    if (crypted === hash) {
+        console.log("That's good hash! " + hash);
+    } else {
+        console.log("Bad hash! " + hash + " crypted " + crypted);
+        return callback(null, {
+            statusCode: 403,
+            body: "Bad Hash!"
+        })
+    }
+
+    //we got a good patreon webhook here
+
+
+    callback(null, {
+        statusCode: 200,
+        headers: {
+            'Content-Type': 'text/html',
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: "Thanks, Patreon!"
+    })
+};
+
 module.exports.requestUploadURL = (event, context, callback) => {
     let params = JSON.parse(event.body);
 
