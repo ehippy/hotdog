@@ -9,7 +9,7 @@
     <style type="text/css">
         canvas {
             display: block;
-            position: absolute;
+            position: fixed;
             z-index: 1;
             pointer-events: none;
         }
@@ -125,6 +125,9 @@
                                 uploadedFileNode.insertBefore(hotDogAnalysis, uploadedFileNode.firstChild);
 
                                 if (hotDogAnalysis.innerHTML.indexOf('Hot Dog') > 0) {
+
+                                    document.getElementById('toot').play();
+
                                     window.rain();
                                     var alart = document.createElement('p');
                                     alart.className = 'hotDogDetected';
@@ -149,6 +152,7 @@
 
     filePicker.addEventListener('change', handleNewFile);
 
+    // ya boi da confetti
     (function () {
         // globals
         var canvas;
